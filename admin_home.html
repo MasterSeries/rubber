@@ -1,0 +1,66 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+  <h1 class="text-3xl font-bold mb-6">Welcome, Admin</h1>
+
+  <!-- Product List -->
+  <h2 class="text-xl font-semibold mb-4">Product List</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for product in products %}
+    <div class="bg-white p-4 rounded shadow hover:shadow-lg transition">
+      <img src="/static/images/{{ product.image }}" class="h-40 w-full object-cover mb-3 rounded">
+      <div>
+        <p class="text-lg font-semibold">{{ product.name }}</p>
+        <p class="text-gray-700">${{ product.price }}</p>
+        <p class="text-sm text-gray-500">Stock: {{ product.stock }}</p>
+      </div>
+      <!-- Product Actions -->
+      <div class="flex justify-between items-center mt-4">
+        <a href="/admin/products/{{ product.id }}/edit" class="text-blue-600 hover:underline">Edit</a>
+        <a href="/admin/products/{{ product.id }}/remove" class="text-red-600 hover:underline">Remove</a>
+      </div>
+    </div>
+    {% else %}
+    <p class="col-span-full text-gray-600">No products available.</p>
+    {% endfor %}
+  </div>
+
+  <!-- User List -->
+  <h2 class="text-xl font-semibold mt-8 mb-4">User List</h2>
+  <div class="overflow-x-auto bg-white p-4 rounded shadow">
+    <table class="min-w-full table-auto">
+      <thead class="bg-gray-200">
+        <tr>
+          <th class="px-4 py-2 text-left">ID</th>
+          <th class="px-4 py-2 text-left">Username</th>
+          <th class="px-4 py-2 text-left">Email</th>
+          <th class="px-4 py-2 text-left">Role</th>
+          <th class="px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td class="px-4 py-2">{{ user.id }}</td>
+          <td class="px-4 py-2">{{ user.username }}</td>
+          <td class="px-4 py-2">{{ user.email }}</td>
+          <td class="px-4 py-2">{{ user.role }}</td>
+          <td class="px-4 py-2">
+            <a href="/admin/users/{{ user.id }}/edit" class="text-blue-600 hover:underline">Edit</a>
+            <a href="/admin/users/{{ user.id }}/remove" class="text-red-600 hover:underline ml-2">Remove</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="5" class="px-4 py-2 text-center text-gray-600">No users available.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Link to Orders -->
+  <div class="mt-8">
+    <a href="/admin/orders" class="text-blue-600 hover:underline text-lg">→ View Orders</a>
+  </div>
+{% endblock %}

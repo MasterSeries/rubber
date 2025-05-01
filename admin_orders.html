@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Orders</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body { font-family: Arial; background: #f4f4f4; padding: 20px; }
+        h1 { text-align: center; }
+        .order-card {
+            background: white;
+            padding: 15px;
+            margin: 10px auto;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            max-width: 700px;
+        }
+        .order-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            float: right;
+            border-radius: 6px;
+        }
+        .ai-note {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .subtotal, .delivery {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📦 All Orders</h1>
+
+{% for order in orders %}
+<div class="order-card">
+    <img src="{{ url_for('static', filename='images/' + order.image) }}" alt="Product Image">
+    <p><strong>User:</strong> {{ order.username }}</p>
+    <p><strong>Product:</strong> {{ order.product_name }}</p>
+    <p><strong>Quantity:</strong> {{ order.quantity }}</p>
+    <p><strong>Price:</strong> ₹{{ order.price }}</p>
+    <p class="subtotal">Subtotal: ₹{{ order.subtotal }}</p>
+    <p class="delivery">Estimated Delivery: {{ order.estimated_delivery }}</p>
+    <p class="ai-note">{{ order.ai_note }}</p>
+</div>
+{% endfor %}
+
+</body>
+</html>

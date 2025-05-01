@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Users</title>
+    <!-- Add your CSS links here -->
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin - User Management</h1>
+        <nav>
+            <ul>
+                <li><a href="/admin">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>List of Users</h2>
+
+        {% if users %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                <a href="/admin/users/edit/{{ user.id }}">Edit</a> | 
+                                <a href="/admin/users/delete/{{ user.id }}">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No users found.</p>
+        {% endif %}
+
+        <!-- Lock/Unlock Admin Login -->
+        <div class="actions">
+            <form action="{{ url_for('lock_admin') }}" method="post">
+                <input type="hidden" name="action" value="lock">
+                <button type="submit">Lock Admin Login</button>
+            </form>
+
+            <form action="{{ url_for('lock_admin') }}" method="post">
+                <input type="hidden" name="action" value="unlock">
+                <button type="submit">Unlock Admin Login</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Your Company</p>
+    </footer>
+</body>
+</html>

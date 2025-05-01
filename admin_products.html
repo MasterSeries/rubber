@@ -1,0 +1,49 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Manage Products</h2>
+
+<!-- + Button to Show Add Product Form -->
+<div class="flex justify-end mb-4">
+    <button onclick="toggleForm()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xl">
+        +
+    </button>
+</div>
+
+<!-- Hidden Add Product Form -->
+<div id="addProductForm" style="display: none;" class="bg-white p-4 rounded shadow mb-6">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <input type="text" name="name" placeholder="Product Name" required class="border p-2 rounded">
+            <input type="number" step="0.01" name="price" placeholder="Price" required class="border p-2 rounded">
+            <input type="number" name="stock" placeholder="Stock" required class="border p-2 rounded">
+            <input type="file" name="image" accept="image/*" required class="border p-2 rounded">
+        </div>
+        <button type="submit" class="mt-4 bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded">
+            Add Product
+        </button>
+    </form>
+</div>
+
+<!-- Product Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+    {% for product in products %}
+        <a href="{{ url_for('view_product', product_id=product['id']) }}">
+            <div class="bg-white rounded shadow p-4 flex flex-col items-center text-center hover:shadow-lg transition">
+                <img src="{{ url_for('static', filename='images/' + product['image']) }}" alt="{{ product['name'] }}" class="w-32 h-32 object-cover mb-4">
+                <h3 class="text-xl font-semibold">{{ product['name'] }}</h3>
+                <p class="text-gray-600 mt-1">Price: ${{ product['price'] }}</p>
+                <p class="text-gray-600">Stock: {{ product['stock'] }}</p>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+<!-- Toggle Script -->
+<script>
+function toggleForm() {
+    const form = document.getElementById('addProductForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6">
+  <h1 class="text-3xl font-bold mb-6">Welcome, {{ session.username }}</h1>
+  <div class="grid grid-cols-2 gap-4">
+    {% for product in products %}
+    <div class="bg-white p-4 rounded shadow">
+      <img src="/static/images/{{ product.image }}" class="h-32 w-full object-cover mb-2 rounded">
+      <p><strong>{{ product.name }}</strong></p>
+      <p>${{ product.price }}</p>
+      <p>Available: {{ product.stock }}</p>
+      <form action="/order/{{ product.id }}" method="post" class="mt-2">
+        <input name="quantity" type="number" min="1" max="{{ product.stock }}" placeholder="Quantity" required class="w-full p-2 border rounded mb-2">
+        <button type="submit" class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Order</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  <a href="/checkout" class="block mt-6 text-blue-700 hover:underline">Go to Checkout</a>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{% extends 'admin_dashboard.html' %}
+
+{% block content %}
+    <div class="max-w-md mx-auto bg-white p-6 rounded shadow">
+        <img src="{{ url_for('static', filename='images/' + product['image']) }}" class="w-full h-64 object-cover rounded mb-4">
+        <h2 class="text-2xl font-bold mb-2">{{ product['name'] }}</h2>
+        <p class="text-lg text-gray-700">Price: ${{ product['price'] }}</p>
+        <p class="text-lg text-gray-700 mb-4">Stock: {{ product['stock'] }}</p>
+        <a href="{{ url_for('admin_products') }}" class="text-blue-600 hover:underline">← Back to Products</a>
+    </div>
+{% endblock %}

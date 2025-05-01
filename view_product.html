@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Details</title>
+    <style>
+        .product-container {
+            max-width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+        .product-container img {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="product-container">
+        <h1>{{ product.name }}</h1>
+        <img src="{{ url_for('static', filename='images/' + product.image) }}">
+        <p><strong>Price:</strong> ₹{{ product.price }}</p>
+        <p><strong>Stock:</strong> {{ product.stock }}</p>
+        <a href="/admin/products">← Back to Products</a>
+    </div>
+</body>
+</html>
